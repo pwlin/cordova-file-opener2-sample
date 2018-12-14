@@ -1,0 +1,7 @@
+{
+  "name": "cordova-file-opener2-sample",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
