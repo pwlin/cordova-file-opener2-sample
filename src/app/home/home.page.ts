@@ -3,6 +3,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File, FileEntry } from '@ionic-native/file/ngx';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -12,10 +13,14 @@ export class HomePage {
   constructor(
     private fileOpener: FileOpener,
     private file: File,
-    private fileTransfer: FileTransfer
+    private fileTransfer: FileTransfer,
   ) {}
 
   downloadUri = 'https://secure.zeald.com/site/ifompt/files/Developing%20&%20Monitoring%20clin.%20reasoning,%20A%20Hoke.pdf';
+
+  open () {
+    this.download().then((file: FileEntry) => this.openFile(file)).catch(console.error);
+  }
 
   openFile(file: FileEntry) {
     this.fileOpener
@@ -26,11 +31,7 @@ export class HomePage {
 
   download() {
     const fileTransferObject: FileTransferObject = this.fileTransfer.create();
-    fileTransferObject
-      .download(this.downloadUri, `${this.file.dataDirectory}/file.pdf`)
-      .then((file: FileEntry) => {
-        this.openFile(file);
-      })
-      .catch(console.error);
+    return fileTransferObject
+      .download(this.downloadUri, `${this.file.dataDirectory}/file.pdf`);
   }
 }
